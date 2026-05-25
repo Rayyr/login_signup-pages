@@ -1,6 +1,8 @@
 
 // Login.js:
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
+
 import { Form, Button,Alert } from 'react-bootstrap';
 import './Login.css';
 
@@ -96,6 +98,8 @@ setErrors({});
           <Button disabled={check()} variant="primary" type="submit" className="login-button">
             Login
           </Button>
+
+          <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
         </Form>
       </div>
     </div>
