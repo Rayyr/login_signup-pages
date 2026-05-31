@@ -1,11 +1,129 @@
-import {react} from 'react';
+import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
+import { Form, Button} from 'react-bootstrap';
+import './Signup.css';
+
+function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmedPassword,setConfirmedPassword]=useState('');
+  const [errors,setErrors]=useState({});
 
 
-function Signup(){
-    return(
-        <p>dd</p>
-    );
+  const validateForm=()=>{
+
+    const newErrors={};
+
+    //password validation
+    if(!password) newErrors.password="Password is required";
+   else if(password.length<=3)
+        newErrors.password="Password must be at least 4 chars";
+
+
+   if(password!==confirmedPassword){
+    newErrors.confirmedPassword="The passwords must be matched";
+   }
+    //email validation
+    if(!email) newErrors.email="Email is required";
+    else {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+     if(emailRegex.test(email)===false) newErrors.email="Invalid email";
+    }
+       
+     return newErrors;
+  }
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const newErrors=validateForm();
+    if(Object.keys(newErrors).length > 0){
+        //invalid form
+        setErrors(newErrors);
+    }
+    else {
+//valid form
+setErrors({});
+    console.log('Signup attempted with:', { email, password });
+    // handle it with backend
+
+    }
+
+
+  };
+
+  const check=()=>{
+    if(!email || !password || !confirmedPassword)
+        return true;
+    else return false;
+  }
+
+  return (
+           <div className="signup-wrapper">
+      <div className="signup-form-container">
+        <h2 className="signup-title">Sign up</h2>
+         
+        <Form onSubmit={handleSubmit}>
+         <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+              required
+              isInvalid={!!errors.email}
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+                  <Form.Control.Feedback type="invalid">
+              {errors.email}
+            </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+              required
+               isInvalid={!!errors.password}
+                type="password"
+                placeholder="Create password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+               <Form.Control.Feedback type="invalid">
+              {errors.password}
+            </Form.Control.Feedback>
+            </Form.Group>
+
+
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+              required
+               isInvalid={!!errors.confirmedPassword}
+                type="password"
+                placeholder="Confirm password"
+                value={confirmedPassword}
+                onChange={(e) => setConfirmedPassword(e.target.value)}
+              />
+               <Form.Control.Feedback type="invalid">
+              {errors.confirmedPassword}
+            </Form.Control.Feedback>
+            </Form.Group>
+
+
+          <Button disabled={check()} variant="primary" type="submit" className="signup-button">
+            Signup
+          </Button>
+
+          <p>Already have an account? <Link to="/login">Log in here</Link></p>
+        </Form>
+      </div>
+    </div>
+           
+  );
 }
-
 
 export default Signup;
