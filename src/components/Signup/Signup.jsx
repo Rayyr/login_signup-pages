@@ -47,8 +47,7 @@ function Signup() {
     } else {
       //valid form
       setErrors({});
-      console.log("Signup attempted with:", { email, password });
-      // handle it with backend
+       // handle it with backend
 
       //send the email , passowrd in req inside response fetch
       const response = await fetch("http://localhost:5000/api/auth/signup", {
@@ -70,7 +69,7 @@ function Signup() {
         return;
       }
 
-      if (response.status === 201) {
+      else if (response.status === 201) {
         setMessage(resData.msg);
         setMessageType("success");
         setTimeout(() => {
