@@ -48,15 +48,17 @@ router.post("/login",async (req,res)=>{
         const user=await User.findOne({email});
 
         if(!user){
-            res.status(400).json({msg:"Invalid email or password"});
+            res.status(400).json({msg:"Invalid email"});
         }
 
+       
         const isPasswordCorrect=await bcrypt.compare(password,user.password);
         if(isPasswordCorrect==false){
-            res.status(400).json({msg:"Invalid email or password"});
+            res.status(400).json({msg:"Invalid password"});
         }
 
-        //valid
+        //valid email & password
+        
         const token=jwt.sign(
             {id:user._id},
             process.env.JWT_SECRET,
