@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import "./Profile.css";
 
 function Profile() {
   const navigate = useNavigate();
@@ -11,16 +12,17 @@ function Profile() {
     navigate("/login");
   }
   return (
-    <div>
-      hi from user: {userId}
-         <Button
-            variant="primary"
-            className="logout-button"
-            onClick={logout}
-          >
-            Logout
-          </Button>
-    </div>
+<div className="header">
+  <span>hi from user: {userId}</span>
+
+  <Button
+    variant="primary"
+    className="logout-button"
+    onClick={logout}
+  >
+    Logout
+  </Button>
+</div>
   );
 }
 
